@@ -1,0 +1,183 @@
+library(readxl)
+supermarket_sales_Sheet1_csv <- read_excel("~/Downloads/supermarket_sales - Sheet1.csv.xls")
+library(readr)
+supermarket_sales_Sheet1 <- read_csv("~/Downloads/supermarket_sales - Sheet1.csv")
+View(supermarket_sales_Sheet1)
+# Check the structure of the dataset
+str(supermarket_sales_Sheet1)
+# View the first few rows
+head(supermarket_sales_Sheet1)
+# Get summary statistics
+summary(supermarket_sales_Sheet1)
+# Install and load the psych package
+install.packages("psych")
+library(psych)
+# Descriptive statistics for numerical variables
+describe(supermarket_sales_Sheet1[, sapply(supermarket_sales_Sheet1, is.numeric)])
+# Frequency of Customer Type
+table(supermarket_sales_Sheet1$`Customer type`)
+# Frequency of Product Line
+table(supermarket_sales_Sheet1$`Product line`)
+# Histogram for 'Unit price'
+hist(supermarket_sales_Sheet1$`Unit price`, main = "Distribution of Unit Price", xlab = "Unit Price", col = "lightblue")
+# Bar plot for 'Product Line'
+barplot(table(supermarket_sales_Sheet1$`Product line`), main = "Product Line Distribution", col = "lightgreen", las = 2)
+# Scatter plot between 'Unit price' and 'Total'
+plot(supermarket_sales_Sheet1$`Unit price`, supermarket_sales_Sheet1$Total, main = "Unit Price vs Total", xlab = "Unit Price", ylab = "Total", col = "blue", pch = 19)
+# Check for missing values
+sum(is.na(supermarket_sales_Sheet1))
+# Correlation matrix for numerical variables
+cor(supermarket_sales_Sheet1[, sapply(supermarket_sales_Sheet1, is.numeric)], use = "complete.obs")
+# Calculate the mean Total sales for each Gender
+aggregate(Total ~ Gender, data = supermarket_sales_Sheet1, FUN = mean)
+# Perform a T-test for 'Total' sales between Male and Female customers
+t_test_result <- t.test(Total ~ Gender, data = supermarket_sales_Sheet1)
+# Print the result
+print(t_test_result)
+# Check for missing values in each column
+colSums(is.na(supermarket_sales_Sheet1))
+# Fill missing numeric values with column mean
+supermarket_sales_Sheet1$Total[is.na(supermarket_sales_Sheet1$Total)] <- mean(supermarket_sales_Sheet1$Total, na.rm = TRUE)
+# Fill missing numeric values with column mean
+supermarket_sales_Sheet1$Total[is.na(supermarket_sales_Sheet1$Total)] <- mean(supermarket_sales_Sheet1$Total, na.rm = TRUE)
+# Convert 'Date' to Date format if necessary
+supermarket_sales_Sheet1$Date <- as.Date(supermarket_sales_Sheet1$Date, format="%m/%d/%Y")
+# Check for missing values in the dataset
+sum(is.na(supermarket_sales_Sheet1))
+# View missing values in each column
+colSums(is.na(supermarket_sales_Sheet1))
+# Remove rows with missing data
+supermarket_sales_cleaned <- na.omit(supermarket_sales_Sheet1)
+# Alternatively, you can fill missing values
+# For example, filling with the mean for numerical columns
+supermarket_sales_cleaned$Total[is.na(supermarket_sales_cleaned$Total)] <- mean(supermarket_sales_cleaned$Total, na.rm = TRUE)
+# Convert character columns to factors
+supermarket_sales_cleaned$City <- as.factor(supermarket_sales_cleaned$City)
+supermarket_sales_cleaned$Customer.type <- as.factor(supermarket_sales_cleaned$Customer.type)
+# Check column names to ensure correct references
+colnames(supermarket_sales_Sheet1)
+# Create a cleaned version of the dataset by removing rows with missing values
+supermarket_sales_cleaned <- na.omit(supermarket_sales_Sheet1)
+# Convert character columns to factors
+supermarket_sales_cleaned$Customer.type <- as.factor(supermarket_sales_cleaned$Customer.type)
+# Step 1: Check Column Names
+colnames(supermarket_sales_cleaned) # Display column names to verify
+# Step 2: Reload Data and Remove Missing Values
+supermarket_sales_cleaned <- na.omit(supermarket_sales_Sheet1)  # Remove rows with missing values
+# Step 3: Check if Required Columns Exist
+if ("Customer.type" %in% colnames(supermarket_sales_cleaned)) {
+# Convert 'Customer.type' and other relevant columns to factors
+supermarket_sales_cleaned$Customer.type <- as.factor(supermarket_sales_cleaned$Customer.type)
+supermarket_sales_cleaned$Gender <- as.factor(supermarket_sales_cleaned$Gender)
+supermarket_sales_cleaned$City <- as.factor(supermarket_sales_cleaned$City)
+# Optional: Convert other categorical columns as needed
+# Example: supermarket_sales_cleaned$Payment <- as.factor(supermarket_sales_cleaned$Payment)
+# Step 4: Display Structure to Confirm Changes
+str(supermarket_sales_cleaned)
+} else {
+# Print an error message if the column is not found
+stop("Column 'Customer.type' not found in the dataset. Check the column names.")
+}
+# Check for missing values
+colSums(is.na(supermarket_sales_Sheet1))
+# Drop the 'Invoice ID' column (since it's not needed for analysis)
+supermarket_sales_clean <- supermarket_sales_Sheet1[, -1]  # Removes the first column
+# Randomly sample 200 rows from the dataset
+set.seed(123)  # Set seed for reproducibility
+supermarket_sales_sample <- supermarket_sales_clean[sample(nrow(supermarket_sales_clean), 200), ]
+# View the cleaned and sampled data
+View(supermarket_sales_sample)
+# Summary statistics for numerical columns
+summary(supermarket_sales_sample[, c("Total", "Quantity", "Tax 5%")])
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result
+print(t_test_result)
+# Boxplot of Total sales for Member vs Normal customers
+boxplot(Total ~ `Customer type`, data = supermarket_sales_sample, main = "Total Sales by Customer Type", ylab = "Total Sales", xlab = "Customer Type")
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result
+print(t_test_result)
+Welch Two Sample t-test
+>
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result (this will display the output in the console)
+print(t_test_result)
+Welch Two Sample t-test
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result (this will display the output in the console)
+print(t_test_result)
+source("~/logistic_regression.R")
+source("~/logistic_regression.R")
+> # Histogram for 'Unit price'
+# Histogram for 'Unit price'> hist(supermarket_sales_Sheet1$`Unit price`, main = "Distribution of Unit Price", xlab = "Unit Price", col = "lightblue")
+source("~/logistic_regression.R")
+source("~/logistic_regression.R")
+source("~/logistic_regression.R")
+# Load data from a CSV file (assuming you saved it as supermarket_sales.csv)
+data <- read.csv("path/to/your/supermarket_sales.csv")
+import pandas as pd
+supermarket_sales_Sheet1_csv <- read_excel("/Users/alijaweddilawari/Downloads/supermarket_sales - Sheet1.csv.xls")
+supermarket_sales_Sheet1_csv <- read.csv("/Users/alijaweddilawari/Downloads/supermarket_sales - Sheet1.csv.xls")
+install.packages("readxl")  # If not already installed
+library(readxl)
+supermarket_sales_Sheet1_csv <- read.csv("/Users/alijaweddilawari/Downloads/supermarket_sales - Sheet1.csv", stringsAsFactors = FALSE)
+head(supermarket_sales_Sheet1_csv)
+library(readxl)
+supermarket_sales_Sheet1_csv <- read_excel("/Users/alijaweddilawari/Downloads/supermarket_sales - Sheet1.xlsx")
+# Check the structure of the dataset
+str(supermarket_sales_Sheet1)
+# View the first few rows
+head(supermarket_sales_Sheet1)
+# Get summary statistics
+summary(supermarket_sales_Sheet1)
+# Install and load the psych package
+install.packages("psych")
+library(psych)
+# Descriptive statistics for numerical variables
+describe(supermarket_sales_Sheet1[, sapply(supermarket_sales_Sheet1, is.numeric)])
+# Frequency of Customer Type
+table(supermarket_sales_Sheet1$`Customer type`)
+# Frequency of Product Line
+table(supermarket_sales_Sheet1$`Product line`)
+# Histogram for 'Unit price'
+hist(supermarket_sales_Sheet1$`Unit price`, main = "Distribution of Unit Price", xlab = "Unit Price", col = "lightblue")
+# Bar plot for 'Product Line'
+barplot(table(supermarket_sales_Sheet1$`Product line`), main = "Product Line Distribution", col = "lightgreen", las = 2)
+# Scatter plot between 'Unit price' and 'Total'
+plot(supermarket_sales_Sheet1$`Unit price`, supermarket_sales_Sheet1$Total, main = "Unit Price vs Total", xlab = "Unit Price", ylab = "Total", col = "blue", pch = 19)
+# Check for missing values
+sum(is.na(supermarket_sales_Sheet1))
+# Correlation matrix for numerical variables
+cor(supermarket_sales_Sheet1[, sapply(supermarket_sales_Sheet1, is.numeric)], use = "complete.obs")
+# Calculate the mean Total sales for each Gender
+aggregate(Total ~ Gender, data = supermarket_sales_Sheet1, FUN = mean)
+# Perform a T-test for 'Total' sales between Male and Female customers
+t_test_result <- t.test(Total ~ Gender, data = supermarket_sales_Sheet1)
+# Print the result
+print(t_test_result)
+# Check for missing values
+colSums(is.na(supermarket_sales_Sheet1))
+# Drop the 'Invoice ID' column (since it's not needed for analysis)
+supermarket_sales_clean <- supermarket_sales_Sheet1[, -1]  # Removes the first column
+# Randomly sample 200 rows from the dataset
+set.seed(123)  # Set seed for reproducibility
+supermarket_sales_sample <- supermarket_sales_clean[sample(nrow(supermarket_sales_clean), 200), ]
+# View the cleaned and sampled data
+View(supermarket_sales_sample)
+# Summary statistics for numerical columns
+summary(supermarket_sales_sample[, c("Total", "Quantity", "Tax 5%")])
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result
+print(t_test_result)
+# Boxplot of Total sales for Member vs Normal customers
+boxplot(Total ~ `Customer type`, data = supermarket_sales_sample, main = "Total Sales by Customer Type", ylab = "Total Sales", xlab = "Customer Type")
+# Perform a T-test for 'Total' sales between Member and Normal customer types
+t_test_result <- t.test(Total ~ `Customer type`, data = supermarket_sales_sample)
+# Print the result (this will display the output in the console)
+print(t_test_result)
+save.image("~/Applied Statistical Modelling/B105 2.0.RData")
